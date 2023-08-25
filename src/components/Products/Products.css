@@ -1,0 +1,22 @@
+.grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.card-image {
+  width: 300px;
+  height: 400px;
+  object-fit: contain;
+}
+
+.product {
+  background-color: rgb(31, 27, 27);
+  padding-bottom: 160px;
+}
+
+.active {
+  background-color: black;
+}
