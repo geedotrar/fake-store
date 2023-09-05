@@ -1,11 +1,21 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "./cart.css";
 
-export default function Cart({ cartItems, handleAddProduct, handleRemoveProduct, removeFromCart }) {
+export default function Cart({ cartItems, handleAddProduct, handleRemoveProduct, removeFromCart, setCartItems }) {
   const totalItems = cartItems.reduce((price, item) => price + item.quantity, 0);
   const totalPrice = cartItems.reduce((price, item) => item.quantity * item.price + price, 0);
 
+  const checkOutButton = () => {
+    if (cartItems.length === 0) {
+      toast.error("please add product first");
+    } else {
+      toast.success("Thank you for shoping");
+      setCartItems([]);
+    }
+  };
+
+  console.log(cartItems);
   return (
     <div className="content-cart">
       <ToastContainer />
@@ -76,7 +86,9 @@ export default function Cart({ cartItems, handleAddProduct, handleRemoveProduct,
                 <p className="text-lg font-bold">Total</p>
                 <div className="mb-1 text-lg font-bold">$ {totalPrice.toFixed(1)}</div>
               </div>
-              <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+              <button onClick={() => checkOutButton()} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+                Check out
+              </button>
             </div>
           </div>
         </div>

@@ -68,7 +68,7 @@ function App() {
     <div>
       <Router>
         <Header cartItems={cartItems} />
-        <Routes handleAddToCart={handleAddToCart} data={data} cartItems={cartItems} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} removeFromCart={removeFromCart} />
+        <Routes handleAddToCart={handleAddToCart} data={data} setCartItems={setCartItems} cartItems={cartItems} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} removeFromCart={removeFromCart} />
         <Footer />
       </Router>
     </div>

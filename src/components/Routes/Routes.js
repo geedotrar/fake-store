@@ -4,13 +4,13 @@ import Products from "../Products/Products";
 import Dashboard from "../Dashboard/Dashboard";
 import Cart from "../Cart/Cart";
 
-const Routes = ({ data, cartItems, handleAddProduct, handleRemoveProduct, removeFromCart, handleAddToCart }) => {
+const Routes = ({ data, cartItems, handleAddProduct, handleRemoveProduct, removeFromCart, handleAddToCart, setCartItems }) => {
   return (
     <div>
       <Switch>
         <Route path="/" element={<Dashboard />}></Route>
         <Route path="/product" element={<Products data={data} handleAddToCart={handleAddToCart} />}></Route>
-        <Route path="/cart" element={<Cart cartItems={cartItems} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} removeFromCart={removeFromCart} />}></Route>
+        <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} removeFromCart={removeFromCart} />}></Route>
       </Switch>
     </div>
   );
