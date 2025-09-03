@@ -1,36 +1,50 @@
 import React from "react";
-import "./footer.css";
 import { useLocation } from "react-router";
+import {
+  EnvelopeIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Footer() {
   const { pathname } = useLocation();
   if (pathname === "/cart") {
-    return null;
+    return null
   }
   return (
-    <div className="footer-container">
-      <footer className="bg-gray-800 shadow dark:bg-gray-900 ">
-        <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-              <li>
-                <a href="https://stevanprb.vercel.app/" className="mr-4 hover:underline md:mr-6 ">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="mailto:stevangeoprb@gmail.com" className="hover:underline">
-                  Contact
-                </a>
-              </li>
-            </ul>
+    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-400 shadow-inner">
+      <div className="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center md:justify-between gap-6">
+          <div className="text-center md:text-left">
+            <h2 className="text-lg font-bold text-white">Fake St*re</h2>
+            <p className="text-sm text-gray-400">
+              Let's Shopping!!
+            </p>
           </div>
-          <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-          <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2023 <a href="https://flowbite.com/" className="hover:underline"></a>. PT Fake St*re
-          </span>
+
+          <ul className="flex space-x-6 text-sm font-medium">
+            <li>
+              <a
+                href="https://stevanprb.vercel.app/"
+                className="flex items-center gap-1 hover:text-white transition"
+              >
+                <InformationCircleIcon className="h-4 w-4" /> About
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:stevangeoprb@gmail.com"
+                className="flex items-center gap-1 hover:text-white transition"
+              >
+                <EnvelopeIcon className="h-4 w-4" /> Contact
+              </a>
+            </li>
+          </ul>
         </div>
-      </footer>
-    </div>
+        <hr className="my-6 border-gray-700" />
+        <div className="text-center text-sm text-gray-500">
+          © 2023 Fake St*re. All rights reserved.
+        </div>
+      </div>
+    </footer>
   );
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
 import { NavLink, Outlet } from "react-router-dom";
-import "./header.css";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline"; // pakai Heroicons
 
 const navigation = [
-  { name: "Dashboard", href: "/", current: false },
-  { name: "All Products", href: "product", current: false },
+  { name: "Dashboard", href: "/" },
+  { name: "All Products", href: "/product" },
 ];
 
 function classNames(...classes) {
@@ -13,35 +13,44 @@ function classNames(...classes) {
 }
 
 export default function Header({ cartItems }) {
-  const totalItems = cartItems.reduce((price, item) => price + item.quantity, 0);
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity,0);
   return (
-    <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
+    <Disclosure as="nav" className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-md">
+      {() => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <NavLink
-                        to={item.href}
-                        key={item.name}
-                        className={classNames(item.current ? "bg-gray-900 text-white" : "no-underline text-gray-300 hover:bg-gray-700 hover:text-white", "rounded-md px-3 py-2 text-sm font-medium")}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                </div>
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center space-x-6">
+                {navigation.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) =>
+                      classNames(
+                        isActive
+                          ? "bg-gray-700 text-white"
+                          : "text-gray-300 hover:text-white hover:bg-gray-700",
+                        "px-4 py-2 rounded-md text-sm font-medium transition duration-200 no-underline"
+                      )
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
+                ))}
               </div>
-              <div>
-                <NavLink to="/cart">
-                  <img src={"https://www.shareicon.net/data/512x512/2016/02/07/281223_cart_512x512.png"} width={40} alt="" />
+              <div className="relative">
+                <NavLink
+                  to="/cart"
+                  className="flex items-center text-gray-300 hover:text-white transition duration-200"
+                >
+                  <ShoppingCartIcon className="h-8 w-8" />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg animate-pulse">
+                      {totalItems}
+                    </span>
+                  )}
                 </NavLink>
               </div>
-              <div>{totalItems === 0 ? "" : <div className="mb-8 text-red-400 text-lg font-bold">{totalItems}</div>}</div>
             </div>
           </div>
           <main>

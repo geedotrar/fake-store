@@ -1,31 +1,76 @@
-import React from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
-export default function ProductModal(props) {
+export default function ProductModal({ data, id, setDisplay, handleAddToCart }) {
+  const product = data[id - 1];
+
+  const addToCart = () => {
+    handleAddToCart(product);
+    toast.success(`${product.title} added to cart 🛒`, {
+      position: "bottom-right",
+      autoClose: 2000,
+    });
+    setDisplay(false);
+  };
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        setDisplay(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [setDisplay]);
+
   return (
-    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-      <div className="relative w-auto my-6 mx-auto max-w-3xl w-full">
-        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-          <div className="flex items-start justify-between p-2 px-5">
-            <h3 className="text-lg font-bold">{props.data[props.id - 1].title}</h3>
-            <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={() => props.setDisplay(false)}>
-              <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
-            </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div
+        className="absolute inset-0 bg-black bg-opacity-50"
+        onClick={() => setDisplay(false)}
+      ></div>
+
+      <div className="relative bg-white rounded-xl shadow-2xl max-w-3xl w-full mx-4 overflow-hidden animate-fadeIn">
+        <div className="flex items-center justify-between border-b px-6 py-4">
+          <h3 className="text-xl font-bold text-gray-800">{product.title}</h3>
+          <button
+            onClick={() => setDisplay(false)}
+            className="text-gray-500 hover:text-gray-700 transition text-2xl font-bold"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center gap-6 p-6">
+          <div className="flex-shrink-0">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-40 h-40 object-contain"
+            />
           </div>
-          <div>
-            <div className="flex items-center justify-center px-12 ">
-              <div>
-                <img src={props.data[props.id - 1].image} class="items-center w-24 h-24 ..." alt="" />
-                <p className="text-justify">{props.data[props.id - 1].description}</p>
-                <div className="text-start ">
-                  <button
-                    type="button"
-                    class="text-white bg-gray-800 hover:bg-[#24292A]/90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                    onClick={() => props.setDisplay(false)}
-                  >
-                    <span>Back</span>
-                  </button>
-                </div>
-              </div>
+
+          <div className="flex-1">
+            <p className="text-gray-600 text-justify leading-relaxed">
+              {product.description}
+            </p>
+            <p className="mt-4 text-lg font-bold text-gray-900">
+              ${product.price}
+            </p>
+
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={() => setDisplay(false)}
+                className="px-5 py-2.5 text-sm rounded-lg font-medium bg-gray-800 text-white hover:bg-gray-900 transition"
+              >
+                Back
+              </button>
+              <button
+                onClick={addToCart}
+                className="px-5 py-2.5 text-sm rounded-lg font-medium bg-green-600 text-white hover:bg-green-700 transition"
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>
